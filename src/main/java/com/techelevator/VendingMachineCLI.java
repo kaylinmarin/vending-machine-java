@@ -3,6 +3,8 @@ package com.techelevator;
 import com.techelevator.view.VendingMenu;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
+import java.util.Map;
+
 
 public class VendingMachineCLI {
 
@@ -24,46 +26,59 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	public void run() {
+	public void run() throws Exception {
 		// for debugging
-		VendingMachine machine;
-		try {
-			machine = new VendingMachine();
-		}
-		catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
-
-
-
+//		VendingMachine machine;
+//		try {
+//			machine = new VendingMachine();
+//		}
+//		catch(Exception e) {
+//			System.out.println(e.getMessage());
+//		}
 		boolean running = true;
+		VendingMachine vendingMachine = new VendingMachine();
 		while (running) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
-//
-//			// A switch statement could also be used here.  Your choice.
-//			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-//				// display vending machine items
-//			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-//				// do purchase
-//			}
+
 			switch (choice) {
-				// how is this printing it??
 				case MAIN_MENU_OPTION_DISPLAY_ITEMS:
-					// display vending machine items
-					// how do I access them from the other class? I need to call it?
-					System.out.println();
+					System.out.println("");
+					System.out.printf("%-5s %-20s %-6s %-10s \n", "Slot", "Name", "Price", "Inventory");
+					System.out.println("..............................................");
+					Map<String, VendingItems> inventory = vendingMachine.getVendingMachineMap();
+					for (VendingItems item : inventory.values()){
+						System.out.printf("%-5s %-20s %-6s %-1s %-8s \n", item.getSlot(), item.getName(), item.getPrice(), "Available:", item.getInventory());
+					}
 					break;
 				case MAIN_MENU_OPTION_PURCHASE:
-					// do purchase
+					String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+					switch (purchaseChoice) {
+						case PURCHASE_MENU_OPTION_FEED_MONEY:
+							//userInput to get money
+							//vendingMachine.depositMoney();
+						case PURCHASE_MENU_OPTION_SELECT_PRODUCT:
+							//userInput key/slot selection
+							//type message output
+							//vendingMachine.makePurchase();
+						case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
+							//Quarters, dimes, and nickels???
+							//vendingMachine.returnChange();
+							break;
+					}
 					break;
 
-				default: MAIN_MENU_OPTION_EXIT:
+				case MAIN_MENU_OPTION_EXIT:
+					running = false;
+				case MAIN_MENU_SECRET_OPTION:
+					// make invisible
+					// print sales log
+					// also create a sales log
 					break;
 			}
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		VendingMenu menu = new VendingMenu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();

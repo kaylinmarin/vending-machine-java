@@ -101,4 +101,8 @@ public class VendingMachine {
         balance = 0;
         return change;
     }
+
+    public Map<String, VendingItems> getVendingMachineMap() {
+        return vendingMachineMap;
+    }
 }
