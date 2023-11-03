@@ -17,7 +17,7 @@ public class VendingMachineCLI {
 	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
 	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
 
-	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, }; //MAIN_MENU_SECRET_OPTION
+	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, MAIN_MENU_SECRET_OPTION}; 
 	private static final String[] PURCHASE_MENU_OPTIONS = { PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
 
 	private VendingMenu menu;
@@ -70,9 +70,9 @@ public class VendingMachineCLI {
 				case MAIN_MENU_OPTION_EXIT:
 					running = false;
 				case MAIN_MENU_SECRET_OPTION:
-					// make invisible
+					// make invisible (option 4)
 					// print sales log
-					// also create a sales log
+					// also create a sales log (write to log file?)
 					break;
 			}
 		}
