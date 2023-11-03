@@ -1,4 +1,4 @@
-package com.techelevator.view;
+package com.techelevator.cli;
 
 import java.io.InputStream;
 import java.io.OutputStream;

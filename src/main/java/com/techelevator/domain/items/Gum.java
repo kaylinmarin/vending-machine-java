@@ -1,4 +1,4 @@
-package com.techelevator.Items;
+package com.techelevator.domain.items;
 
 public class Gum extends VendingItems {
 

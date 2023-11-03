@@ -1,7 +1,8 @@
-package com.techelevator;
+package com.techelevator.cli;
 
-import com.techelevator.Items.VendingItems;
-import com.techelevator.view.VendingMenu;
+import com.techelevator.domain.items.VendingItems;
+import com.techelevator.domain.vending.VendingMachine;
+import com.techelevator.services.Logger;
 
 import java.util.Map;
 
@@ -21,20 +22,15 @@ public class VendingMachineCLI {
 	private static final String[] PURCHASE_MENU_OPTIONS = { PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
 
 	private VendingMenu menu;
+	private Logger logger;
 
-	public VendingMachineCLI(VendingMenu menu) {
+	public VendingMachineCLI(VendingMenu menu, Logger logger) {
 		this.menu = menu;
+		this.logger = logger;
 	}
 
 	public void run() throws Exception {
-		// for debugging
-//		VendingMachine machine;
-//		try {
-//			machine = new VendingMachine();
-//		}
-//		catch(Exception e) {
-//			System.out.println(e.getMessage());
-//		}
+
 		boolean running = true;
 		VendingMachine vendingMachine = new VendingMachine();
 		while (running) {
@@ -69,6 +65,7 @@ public class VendingMachineCLI {
 
 				case MAIN_MENU_OPTION_EXIT:
 					running = false;
+					break;
 				case MAIN_MENU_SECRET_OPTION:
 					// make invisible (option 4)
 					// print sales log
@@ -76,11 +73,5 @@ public class VendingMachineCLI {
 					break;
 			}
 		}
-	}
-
-	public static void main(String[] args) throws Exception {
-		VendingMenu menu = new VendingMenu(System.in, System.out);
-		VendingMachineCLI cli = new VendingMachineCLI(menu);
-		cli.run();
 	}
 }

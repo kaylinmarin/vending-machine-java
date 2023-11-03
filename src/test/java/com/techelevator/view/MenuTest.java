@@ -3,6 +3,7 @@ package com.techelevator.view;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import com.techelevator.cli.VendingMenu;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

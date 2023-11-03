@@ -1,7 +1,7 @@
-package com.techelevator;
+package com.techelevator.domain.vending;
 
-import Items.*;
-import com.techelevator.Items.*;
+
+import com.techelevator.domain.items.*;
 
 import java.io.File;
 import java.util.*;
