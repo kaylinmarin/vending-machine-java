@@ -15,10 +15,15 @@ public class VendingMenu {
 		this.in = new Scanner(input);
 	}
 
-	public Object getChoiceFromOptions(Object[] options) {
+	public Object getChoiceFromOptions(Object[] options)
+	{
+		return getChoiceFromOptions(options, options);
+	}
+
+	public Object getChoiceFromOptions(Object[] options, Object[] optionsToDisplay) {
 		Object choice = null;
 		while (choice == null) {
-			displayMenuOptions(options);
+			displayMenuOptions(optionsToDisplay);
 			choice = getChoiceFromUserInput(options);
 		}
 		return choice;

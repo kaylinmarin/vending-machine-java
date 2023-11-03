@@ -2,13 +2,17 @@ package com.techelevator.domain.vending;
 
 
 import com.techelevator.domain.items.*;
+import com.techelevator.services.Logger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.io.File;
 import java.util.*;
 
 public class VendingMachine {
 
-    public Map<String, VendingItems> vendingMachineMap = new HashMap<>();
+    private Logger logger;
+    private Map<String, VendingItems> vendingMachineMap = new HashMap<>();
     private double balance;
     private double sales;
 
@@ -16,19 +20,9 @@ public class VendingMachine {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
 
-    public double getSales() {
-        return sales;
-    }
-
-    public void setSales(double sales) {
-        this.sales = sales;
-    }
-
-    public VendingMachine() throws Exception {
+    public VendingMachine(Logger logger) throws Exception {
+        this.logger = logger;
         File inputFile = new File("vendingmachine.csv");
         Scanner inputScanner = new Scanner(inputFile);
         while (inputScanner.hasNextLine()) {
@@ -70,38 +64,58 @@ public class VendingMachine {
 
         boolean debug = false;
     }
-    public Collection<VendingItems> getInventory() {
-        return vendingMachineMap.values();
-    }
     public void depositMoney(double money) {
         balance += money;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        logger.writeToLog(String.format("%s FEED MONEY: $%.2f $%.2f", formatter.format(date), money, balance));
+        //get date and other info
 
     }
-    public boolean makePurchase(String slot) {
-
+    public Collection<String> makePurchase(String slot) {
+        List<String> messages = new ArrayList<>();
         boolean itemExists = vendingMachineMap.containsKey(slot);
-        if (!itemExists) return false;
+        if (!itemExists) {
+            messages.add("Sorry, this item does not exist.");
+            return messages;
+        }
+
         VendingItems item = vendingMachineMap.get(slot);
         boolean balanceIsAdequate = balance >= item.getPrice();
         boolean itemIsInStock = item.getInventory() > 0;
 
         //item exists && enough money for purchase && in stock items?
         // if not, no purchase = false
-        if (!balanceIsAdequate || !itemIsInStock) return false;
+        if (!itemIsInStock) {
+            messages.add("Sorry, this item is out of stock.");
+        }
+        else if (!balanceIsAdequate) {
+            messages.add(String.format("Sorry, you have $%.2f and %s costs $%.2f. Please add more money.", balance, item.getName(), item.getPrice()));
 
-        else if (itemIsInStock && balanceIsAdequate) {
+        }
+        else {
             //deduct cost of item from balance
             balance -= item.getPrice();
             //decrement number of items
             item.setInventory(item.getInventory()-1);
             //add cost of item to sales
             sales += item.getPrice();
+
+            messages.add(String.format("Purchased %s Please enjoy.", item.getName()));
+            messages.add(item.displayMessage());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            logger.writeToLog(String.format("%s %s %s $%.2f $%.2f", formatter.format(date), item.getName(), slot, item.getPrice(), balance));
         }
-        return true;
+        return messages;
     }
     public double returnChange() {
         double change = balance;
         balance = 0;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        logger.writeToLog(String.format("%s GIVE CHANGE: $%.2f $%.2f", formatter.format(date), change, balance));
         return change;
     }
 
