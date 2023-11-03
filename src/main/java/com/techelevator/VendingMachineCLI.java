@@ -1,7 +1,7 @@
 package com.techelevator;
 
 import com.techelevator.view.VendingMenu;
-
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 
 public class VendingMachineCLI {
@@ -33,6 +33,7 @@ public class VendingMachineCLI {
 		catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
+
 
 
 		boolean running = true;

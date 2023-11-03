@@ -75,21 +75,25 @@ public class VendingMachine {
 
     }
     public boolean makePurchase(String slot) {
-        boolean itemExists = vendingMachineMap.containsKey(slot);
 
+        boolean itemExists = vendingMachineMap.containsKey(slot);
+        if (!itemExists) return false;
         VendingItems item = vendingMachineMap.get(slot);
         boolean balanceIsAdequate = balance >= item.getPrice();
         boolean itemIsInStock = item.getInventory() > 0;
 
         //item exists && enough money for purchase && in stock items?
         // if not, no purchase = false
-        if (!itemExists || !balanceIsAdequate || !itemIsInStock) return false;
-        //deduct cost of item from balance
-        balance = balance - item.getPrice();
-        //decrement number of items
-         
-        //add cost of item to sales
-        sales = getSales() + sales;
+        if (!balanceIsAdequate || !itemIsInStock) return false;
+
+        else if (itemIsInStock && balanceIsAdequate) {
+            //deduct cost of item from balance
+            balance -= item.getPrice();
+            //decrement number of items
+            item.setInventory(item.getInventory()-1);
+            //add cost of item to sales
+            sales += item.getPrice();
+        }
         return true;
     }
     public double returnChange() {
