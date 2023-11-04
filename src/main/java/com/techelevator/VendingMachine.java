@@ -1,6 +1,6 @@
 package com.techelevator;
 
-import Items.*;
+//import Items.*;
 import com.techelevator.Items.*;
 
 import java.io.File;
@@ -9,8 +9,16 @@ import java.util.*;
 public class VendingMachine {
 
     public Map<String, VendingItems> vendingMachineMap = new HashMap<>();
-    private double balance;
-    private double sales;
+
+    public String products = "";
+    public int inventoryAvailable = 5;
+
+    public static double balance;
+
+    public double sales;
+    public double costOfProduct=0;
+
+    public String product= "";
 
     public double getBalance() {
         return balance;
@@ -108,4 +116,5 @@ public class VendingMachine {
     public Map<String, VendingItems> getVendingMachineMap() {
         return vendingMachineMap;
     }
+
 }

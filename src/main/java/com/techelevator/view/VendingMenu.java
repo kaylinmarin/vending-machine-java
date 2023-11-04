@@ -15,6 +15,11 @@ public class VendingMenu {
 		this.in = new Scanner(input);
 	}
 
+	public String getUserInput(){
+		String userInput = in.nextLine();
+		return userInput;
+	}
+
 	public Object getChoiceFromOptions(Object[] options) {
 		Object choice = null;
 		while (choice == null) {
@@ -50,4 +55,6 @@ public class VendingMenu {
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
+
+
 }
