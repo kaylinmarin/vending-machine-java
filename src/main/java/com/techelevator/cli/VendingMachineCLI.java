@@ -4,7 +4,9 @@ import com.techelevator.domain.items.VendingItems;
 import com.techelevator.domain.vending.VendingMachine;
 import com.techelevator.services.Logger;
 
+import java.beans.PropertyEditorManager;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -78,13 +80,41 @@ public class VendingMachineCLI{
 						case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
 							//Quarters, dimes, and nickels???
 							//vendingMachine.returnChange();
-							System.out.printf("Thank you for purchasing. I'm returning %.2f to you", vendingMachine.returnChange());
+							double changeTotal = vendingMachine.returnChange();
+
+							int quartersToReturn =0;
+							int dimesToReturn=0;
+							int nickelsToReturn=0;
+							int dollarsToReturn = vendingMachine.dollarsToReturn(changeTotal);
+
+							double remainder = changeTotal - (dollarsToReturn*1);
+
+							if (remainder > 0){
+								 quartersToReturn = vendingMachine.quartersToReturn(remainder);
+								 remainder = remainder- (quartersToReturn*0.25);
+								if (remainder > 0){
+									dimesToReturn = vendingMachine.dimesToReturn(remainder);
+									remainder = remainder - (dimesToReturn*0.1);
+
+								}
+								if (remainder > 0){
+									nickelsToReturn = vendingMachine.nickelsToReturn(remainder);
+								}
+							}
+
+							System.out.println( "Here is your change: Dollars: " +dollarsToReturn + ", Quarters:  " + quartersToReturn + ", dimes: " + dimesToReturn + ", nickels:" + nickelsToReturn);
+
+
+
+
+							System.out.printf("Thank you for purchasing. I'm returning %.2f to you", changeTotal);
 							break;
 					}
 					break;
 
 				case MAIN_MENU_OPTION_EXIT:
 					running = false;
+					System.out.println("Goodbye");
 					break;
 				case MAIN_MENU_SECRET_OPTION:
 					// make invisible (option 4)

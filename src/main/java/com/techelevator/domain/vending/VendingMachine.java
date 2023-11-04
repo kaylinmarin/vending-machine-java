@@ -11,7 +11,14 @@ import java.util.*;
 
 public class VendingMachine {
 
+
+
     private Logger logger;
+    double QUARTERS = 0.25;
+    double DIMES = 0.10;
+    double NICKELS = 0.05;
+
+    int DOLLARS = 1;
     private Map<String, VendingItems> vendingMachineMap = new HashMap<>();
     private double balance;
     private double sales;
@@ -74,9 +81,10 @@ public class VendingMachine {
     }
     public Collection<String> makePurchase(String slot) {
         List<String> messages = new ArrayList<>();
+        slot = slot.toUpperCase(Locale.ROOT);
         boolean itemExists = vendingMachineMap.containsKey(slot);
         if (!itemExists) {
-            messages.add("Sorry, this item does not exist.");
+            messages.add("Sorry, " + slot + " item does not exist.");
             return messages;
         }
 
@@ -112,15 +120,30 @@ public class VendingMachine {
     }
     public double returnChange() {
         double change = balance;
-        balance = 0;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        logger.writeToLog(String.format("%s GIVE CHANGE: $%.2f $%.2f", formatter.format(date), change, balance));
         return change;
     }
+
+    public int quartersToReturn(double changeTotal){
+        return (int)(changeTotal / QUARTERS);
+    }
+    public int dimesToReturn(double remainder){
+        return (int)(remainder / DIMES);
+    }
+    public int nickelsToReturn(double remainder){
+        return (int)(remainder / NICKELS);
+    }
+    public int dollarsToReturn(double remainder){
+        return (int)(remainder / DOLLARS);
+    }
+
+
 
     public Map<String, VendingItems> getVendingMachineMap() {
         return vendingMachineMap;
     }
+
+
 
 }
