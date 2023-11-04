@@ -1,4 +1,4 @@
-package com.techelevator.view;
+package com.techelevator.cli;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,15 +15,15 @@ public class VendingMenu {
 		this.in = new Scanner(input);
 	}
 
-	public String getUserInput(){
-		String userInput = in.nextLine();
-		return userInput;
+	public Object getChoiceFromOptions(Object[] options)
+	{
+		return getChoiceFromOptions(options, options);
 	}
 
-	public Object getChoiceFromOptions(Object[] options) {
+	public Object getChoiceFromOptions(Object[] options, Object[] optionsToDisplay) {
 		Object choice = null;
 		while (choice == null) {
-			displayMenuOptions(options);
+			displayMenuOptions(optionsToDisplay);
 			choice = getChoiceFromUserInput(options);
 		}
 		return choice;
