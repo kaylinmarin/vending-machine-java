@@ -23,8 +23,11 @@ public class Logger {
     // method that takes a string and logs it to the file
     public void writeToLog(String message) {
         try(FileWriter fileWriter = new FileWriter(filePath, true);
+
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             PrintWriter printWriter = new PrintWriter(bufferedWriter))
+
+                //add totals from array[3]
         {
             printWriter.println(message);
 
@@ -46,6 +49,10 @@ public class Logger {
             while (logReader.hasNextLine()) {
                 // read the line from the file
                 String logLine = logReader.nextLine();
+
+                //add totals from array[3]
+
+
                 // add the line to the return list
                 returnList.add(logLine);
             }

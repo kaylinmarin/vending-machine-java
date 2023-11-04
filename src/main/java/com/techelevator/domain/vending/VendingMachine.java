@@ -1,6 +1,7 @@
 package com.techelevator.domain.vending;
 
 
+import com.techelevator.domain.Transactions.TransactionRecord;
 import com.techelevator.domain.items.*;
 import com.techelevator.services.Logger;
 import java.text.SimpleDateFormat;
@@ -17,8 +18,9 @@ public class VendingMachine {
     public double QUARTER = 0.25;
    public double DIME = 0.10;
    public double NICKEL = 0.05;
+   public List<TransactionRecord> transactions = new ArrayList<>();
 
-    public int DOLLAR = 1;
+
     private Map<String, VendingItems> vendingMachineMap = new HashMap<>();
     private double balance;
     private double sales;
@@ -115,6 +117,8 @@ public class VendingMachine {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = new Date();
             logger.writeToLog(String.format("%s %s %s $%.2f $%.2f", formatter.format(date), item.getName(), slot, item.getPrice(), balance));
+            TransactionRecord record = new TransactionRecord(item.getName(), item.getPrice(), item.getSlot(), date);
+            transactions.add(record);
         }
         return messages;
     }
