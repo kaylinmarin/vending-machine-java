@@ -4,6 +4,7 @@ import com.techelevator.domain.items.VendingItems;
 import com.techelevator.domain.vending.VendingMachine;
 import com.techelevator.services.Logger;
 
+import java.awt.geom.QuadCurve2D;
 import java.beans.PropertyEditorManager;
 import java.util.Collection;
 import java.util.Locale;
@@ -25,7 +26,11 @@ public class VendingMachineCLI{
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, MAIN_MENU_SECRET_OPTION};
 	private static final String[] MAIN_MENU_OPTIONS_TO_DISPLAY = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
 	private static final String[] PURCHASE_MENU_OPTIONS = { PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
-
+//	double QUARTER = 0.25;
+//	double DIME = 0.10;
+//	double NICKEL = 0.05;
+//
+//	int DOLLAR = 1;
 	private VendingMenu menu;
 	private Logger logger;
 
@@ -78,31 +83,29 @@ public class VendingMachineCLI{
 							}
 							break;
 						case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
-							//Quarters, dimes, and nickels???
+							//Quarters, dimes, and nickels
+
 							//vendingMachine.returnChange();
 							double changeTotal = vendingMachine.returnChange();
 
-							int quartersToReturn =0;
+							int quartersToReturn = vendingMachine.quartersToReturn(changeTotal);
 							int dimesToReturn=0;
 							int nickelsToReturn=0;
-							int dollarsToReturn = vendingMachine.dollarsToReturn(changeTotal);
 
-							double remainder = changeTotal - (dollarsToReturn*1);
+							double remainder = changeTotal - (quartersToReturn*vendingMachine.QUARTER);
 
-							if (remainder > 0){
-								 quartersToReturn = vendingMachine.quartersToReturn(remainder);
-								 remainder = remainder- (quartersToReturn*0.25);
+
 								if (remainder > 0){
 									dimesToReturn = vendingMachine.dimesToReturn(remainder);
-									remainder = remainder - (dimesToReturn*0.1);
+									remainder = remainder - (dimesToReturn*vendingMachine.DIME);
 
 								}
 								if (remainder > 0){
 									nickelsToReturn = vendingMachine.nickelsToReturn(remainder);
 								}
-							}
 
-							System.out.println( "Here is your change: Dollars: " +dollarsToReturn + ", Quarters:  " + quartersToReturn + ", dimes: " + dimesToReturn + ", nickels:" + nickelsToReturn);
+
+							System.out.println( "Here is your change:Quarters:  " + quartersToReturn + ", dimes: " + dimesToReturn + ", nickels:" + nickelsToReturn);
 
 
 

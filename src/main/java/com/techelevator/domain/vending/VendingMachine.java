@@ -14,11 +14,11 @@ public class VendingMachine {
 
 
     private Logger logger;
-    double QUARTERS = 0.25;
-    double DIMES = 0.10;
-    double NICKELS = 0.05;
+    public double QUARTER = 0.25;
+   public double DIME = 0.10;
+   public double NICKEL = 0.05;
 
-    int DOLLARS = 1;
+    public int DOLLAR = 1;
     private Map<String, VendingItems> vendingMachineMap = new HashMap<>();
     private double balance;
     private double sales;
@@ -126,17 +126,15 @@ public class VendingMachine {
     }
 
     public int quartersToReturn(double changeTotal){
-        return (int)(changeTotal / QUARTERS);
+        return (int)(changeTotal / QUARTER);
     }
     public int dimesToReturn(double remainder){
-        return (int)(remainder / DIMES);
+        return (int)(remainder / DIME);
     }
     public int nickelsToReturn(double remainder){
-        return (int)(remainder / NICKELS);
+        return (int)(remainder / NICKEL);
     }
-    public int dollarsToReturn(double remainder){
-        return (int)(remainder / DOLLARS);
-    }
+
 
 
 
